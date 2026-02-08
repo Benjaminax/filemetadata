@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Metadata Microservice | Antigravity</title>
+    <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/public/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1>File AnalyzR</h1>
+        <p class="subtitle">Extract precise metadata from your files instantly.</p>
+        
+        <div class="card">
+            <form id="uploadForm" enctype="multipart/form-data" method="POST" action="/api/fileanalyse">
+                <div class="upload-area" id="dropZone">
+                    <span class="upload-icon">📁</span>
+                    <p id="instruction">Click or drag a file here to upload</p>
+                    <p class="file-name" id="fileNameDisplay"></p>
+                    <input id="inputfield" type="file" name="upfile" required>
+                </div>
+                <button type="submit" id="button">Analyze File</button>
+            </form>
+        </div>
+
+        <footer class="footer">
+            <p>Designed with ❤️ for <a href="http://www.freecodecamp.com" target="_blank">freeCodeCamp</a></p>
+        </footer>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('inputfield');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const instruction = document.getElementById('instruction');
+        const dropZone = document.getElementById('dropZone');
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.textContent = e.target.files[0].name;
+                instruction.textContent = "File selected:";
+            } else {
+                fileNameDisplay.textContent = "";
+                instruction.textContent = "Click or drag a file here to upload";
+            }
+        });
+
+        // Simple drag & drop visual feedback
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'var(--primary)';
+                dropZone.style.background = 'rgba(99, 102, 241, 0.1)';
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+                dropZone.style.background = 'transparent';
+            }, false);
+        });
+    </script>
+</body>
+</html>
