@@ -25,6 +25,10 @@ app.post('/api/fileanalyse', upload.single('upfile'), function (req, res) {
   });
 });
 
+// Keep-alive endpoint for cron jobs to prevent cold starts
+app.get('/api/health', function (req, res) {
+  res.json({ status: 'ok' });
+});
 
 
 const port = process.env.PORT || 3000;
